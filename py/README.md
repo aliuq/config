@@ -24,3 +24,5 @@
 	```bash
 	npx degit aliuq/config/py/pyproject.toml pyproject.toml
 	```
+
++ See more in [`style.py`](https://github.com/google/yapf/blob/main/yapf/yapflib/style.py)
