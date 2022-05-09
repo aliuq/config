@@ -14,7 +14,7 @@
 	{
 	  "python.formatting.provider": "yapf",
 	  "[python]": {
-		  "editor.formatOnSave": true
+	    "editor.formatOnSave": true
 	  },
 	}
 	```
