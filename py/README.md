@@ -12,10 +12,10 @@
 
 	```json
 	{
-		"python.formatting.provider": "yapf",
-		"[python]": {
-			"editor.formatOnSave": true
-		},
+	  "python.formatting.provider": "yapf",
+	  "[python]": {
+		  "editor.formatOnSave": true
+	  },
 	}
 	```
 
