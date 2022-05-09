@@ -8,7 +8,7 @@
 	```
 
 2. Set formatting provider in `settings.json`:
-	```json
+	```json5
 	{
 		"python.formatting.provider": "yapf",
 		"[python]": {
