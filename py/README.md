@@ -8,7 +8,7 @@
 	```
 
 2. Set formatting provider in `settings.json`:
-	```json
+	```yaml
 	{
 		"python.formatting.provider": "yapf",
 		"[python]": {
