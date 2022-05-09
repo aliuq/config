@@ -1,6 +1,3 @@
 # Configurations
 
-1. `pyproject.toml`: [yapf](https://github.com/google/yapf), python formatter provider, file position need in `.vscode`
-	```bash
-	npx degit aliuq/config/pyproject.toml pyproject.toml
-	```
+1. [`pyproject.toml`](/py/): [yapf](https://github.com/google/yapf) configuration, python formatter provider, file position need at `.vscode`
