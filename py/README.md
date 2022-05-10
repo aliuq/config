@@ -8,6 +8,12 @@
 	pip install yapf
 	```
 
++ Install `pyproject.toml` deps module `toml`:
+
+	```bash
+	pip install toml
+	```
+
 + Set formatting provider in `settings.json`:
 
 	```json
@@ -19,7 +25,7 @@
 	}
 	```
 
-+ Clone `pyproject.toml` in `.vscode`:
++ Clone `pyproject.toml`:
 
 	```bash
 	npx degit aliuq/config/py/pyproject.toml pyproject.toml
