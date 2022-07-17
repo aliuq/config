@@ -11,9 +11,27 @@ ZSH_THEME="agnoster"
 # git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+# Enable aliases to be sudo’ed
+# http://askubuntu.com/questions/22037/aliases-not-available-when-using-sudo
+alias _='sudo '
 
-[ -s "~/.alias.bashrc" ] && source "~/.alias.bashrc"
+alias py="python3"
+alias cls="clear"
+alias apps="cd ~/apps"
+alias szsh="source ~/.zshrc"
+alias vzsh="vim ~/.zshrc"
+alias sbash="source ~/.bashrc"
+alias vbash="vim ~/.bashrc"
+alias aptup="sudo apt update && sudo apt -y upgrade"
+alias yumup="sudo yum update && sudo yum -y upgrade"
+alias k='kubectl'
+alias kc='kubectl config'
+
+function i() {
+  cd ~/apps/$1
+}
+
+export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
