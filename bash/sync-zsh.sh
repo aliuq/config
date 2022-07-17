@@ -5,8 +5,7 @@
 #
 
 sudo yum -y update && sudo yum -y install zsh git
-
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" -y
+curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh -s - -y
 
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
@@ -18,5 +17,3 @@ elif [ -f ~/.bashrc ]; then
 fi
 
 curl -fsS https://raw.githubusercontent.com/aliuq/config/master/bash/.alias.bashrc -o ~/.alias.bashrc
-
-
