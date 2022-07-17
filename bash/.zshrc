@@ -1,0 +1,44 @@
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+  . /etc/bashrc
+fi
+
+# Path to your oh-my-zsh installation.
+export ZSH="$HOME/.oh-my-zsh"
+
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+ZSH_THEME="agnoster"
+
+# git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+# git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
+
+export PATH=$HOME/bin:/usr/local/bin:$PATH
+
+[ -s "~/$USER/alias.bashrc" ] && source "~/$USER/alias.bashrc"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# tabtab source for packages
+# uninstall by removing these lines
+[[ -f ~/.config/tabtab/zsh/__tabtab.zsh ]] && . ~/.config/tabtab/zsh/__tabtab.zsh || true
+
+# bun completions
+[ -s "~/$USER/.bun/_bun" ] && source "~/$USER/.bun/_bun"
+
+# Bun
+export BUN_INSTALL="~/$USER/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# Pnpm
+export PNPM_HOME="~/$USER/.local/share/pnpm"
+export PATH="$PNPM_HOME:$PATH"
+
+source $ZSH/oh-my-zsh.sh
+# User configuration
+source ~/.bash_profile
