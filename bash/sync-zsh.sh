@@ -11,9 +11,9 @@ git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-m
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
 if [ -f ~/.zshrc ]; then
-  echo '[ -s "~/$USER/alias.bashrc" ] && source "~/$USER/alias.bashrc"' >> ~/.zshrc
+  echo '[ -s "~/$USER/.alias.bashrc" ] && source "~/$USER/.alias.bashrc"' >> ~/.zshrc
 elif [ -f ~/.bashrc ]; then
-  echo '[ -s "~/$USER/alias.bashrc" ] && source "~/$USER/alias.bashrc"' >> ~/.bashrc
+  echo '[ -s "~/$USER/.alias.bashrc" ] && source "~/$USER/.alias.bashrc"' >> ~/.bashrc
 fi
 
 curl -fsS https://raw.githubusercontent.com/aliuq/config/master/bash/.alias.bashrc -o ~/.alias.bashrc
