@@ -1,6 +1,10 @@
 #! /bin/sh
+#
+# Usage
+#    source <(curl -fsSL https://raw.githubusercontent.com/aliuq/config/master/bash/sync-zsh.sh)
+#
 
-sudo yum update && sudo yum -y install zsh git
+sudo yum -y update && sudo yum -y install zsh git
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" -y
 
@@ -14,3 +18,5 @@ elif [ -f ~/.bashrc ]; then
 fi
 
 curl -fsS https://raw.githubusercontent.com/aliuq/config/master/bash/.alias.bashrc -o ~/.alias.bashrc
+
+
