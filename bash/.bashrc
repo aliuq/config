@@ -19,3 +19,9 @@ fi
 if [ -f /etc/bashrc ]; then
     . /etc/bashrc
 fi
+
+# Key bindings, up/down arrow searches through history
+bind '"\e[A": history-search-backward'
+bind '"\e[B": history-search-forward'
+bind '"\eOA": history-search-backward'
+bind '"\eOB": history-search-forward'
