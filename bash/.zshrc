@@ -1,11 +1,6 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-# Source global definitions
-if [ -f /etc/bashrc ]; then
-  . /etc/bashrc
-fi
-
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -18,7 +13,7 @@ plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-[ -s "~/$USER/alias.bashrc" ] && source "~/$USER/alias.bashrc"
+[ -s "~/.alias.bashrc" ] && source "~/.alias.bashrc"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

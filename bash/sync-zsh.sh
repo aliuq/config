@@ -10,10 +10,7 @@ curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/instal
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 
-if [ -f ~/.zshrc ]; then
-  echo '[ -s "~/.alias.bashrc" ] && source "~/.alias.bashrc"' >> ~/.zshrc
-elif [ -f ~/.bashrc ]; then
-  echo '[ -s "~/.alias.bashrc" ] && source "~/.alias.bashrc"' >> ~/.bashrc
-fi
-
+curl -fsSL https://raw.githubusercontent.com/aliuq/config/master/bash/.zshrc > ~/.zshrc
 curl -fsS https://raw.githubusercontent.com/aliuq/config/master/bash/.alias.bashrc -o ~/.alias.bashrc
+
+zsh
