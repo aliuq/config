@@ -32,7 +32,7 @@ function i() {
 function sr() {
   systemctl restart $1
 }
-function ss() {
+function sst() {
   systemctl status $1
 }
 
