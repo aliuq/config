@@ -24,11 +24,13 @@ alias sbash="source ~/.bashrc"
 alias vbash="vim ~/.bashrc"
 alias aptup="sudo apt update && sudo apt -y upgrade"
 alias yumup="sudo yum update && sudo yum -y upgrade"
-alias k='kubectl'
-alias kc='kubectl config'
+alias s="systemctl"
 
 function i() {
   cd ~/apps/$1
+}
+function sr() {
+  systemctl restart $1
 }
 
 export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -55,3 +57,9 @@ export PATH="$PNPM_HOME:$PATH"
 source $ZSH/oh-my-zsh.sh
 # User configuration
 source ~/.bash_profile
+
+# ======== kubectl ========
+alias k='kubectl'
+alias kc='kubectl config'
+alias kpods='kubectl get pods -A'
+alias knodes='kubectl get nodes'
