@@ -7,6 +7,10 @@ export ZSH="$HOME/.oh-my-zsh"
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="agnoster"
 
+# https://kubernetes.io/zh-cn/docs/tasks/tools/included/optional-kubectl-configs-zsh/
+autoload -Uz compinit
+compinit
+
 # git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 # git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
@@ -60,6 +64,8 @@ export PATH="$PNPM_HOME:$PATH"
 source $ZSH/oh-my-zsh.sh
 # User configuration
 source ~/.bash_profile
+# kubectl
+source <(kubectl completion zsh)
 
 # ======== kubectl ========
 alias k='kubectl'
