@@ -1,7 +1,7 @@
 #! /bin/sh
 #
 # Usage
-#    curl -fsSL https://raw.githubusercontent.com/aliuq/config/master/bash/sync-zsh.sh | sh
+#    curl -fsSL https://github.com/aliuq/config/raw/master/bash/sync-zsh.sh | sh
 #
 
 sudo yum -y update && sudo yum -y install zsh git
