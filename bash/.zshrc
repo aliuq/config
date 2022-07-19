@@ -32,6 +32,9 @@ function i() {
 function sr() {
   systemctl restart $1
 }
+function ss() {
+  systemctl status $1
+}
 
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 
