@@ -1,7 +1,7 @@
 #! /bin/sh
 #
 # Usage
-#    source <(curl -fsSL https://raw.githubusercontent.com/aliuq/config/master/bash/sync-zsh.sh)
+#    curl -fsSL https://raw.githubusercontent.com/aliuq/config/master/bash/sync-zsh.sh | sh
 #
 
 sudo yum -y update && sudo yum -y install zsh git
@@ -12,4 +12,4 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 
 curl -fsSL https://raw.githubusercontent.com/aliuq/config/master/bash/.zshrc > ~/.zshrc
 
-zsh
+chsh -s /bin/zsh root
