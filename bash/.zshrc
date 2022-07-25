@@ -72,3 +72,22 @@ alias k='kubectl'
 alias kc='kubectl config'
 alias kpods='kubectl get pods -A'
 alias knodes='kubectl get nodes'
+
+function klogs() {
+  if [ $1 ]; then
+    namespace=$(kubectl get pods -A | grep $1 | awk '{print $1}')
+    kubectl logs -n $namespace $1
+  fi
+}
+
+function kdns() {
+  if [ $1 ]; then
+    file="/tmp/ns/$1_tmp.json"
+    kubectl get namespace $1 -o json > $file >/dev/null 2>&1
+    echo `cat $file` | perl -pe "s/\"finalizers\": \[.*?\]/\"finalizers\": \[\]/g" > "$file" >/dev/null 2>&1
+    kubectl replace --raw "/api/v1/namespaces/$1/finalize" -f "$file" >/dev/null 2>&1
+    echo "namespace $1 is deleted"
+    rm $file -rf
+    return 0
+  fi
+}
