@@ -82,7 +82,7 @@ function klogs() {
 
 function kdns() {
   if [ $1 ]; then
-    file="/tmp/ns/$1_tmp.json"
+    file="$1_tmp.json"
     kubectl get namespace $1 -o json > $file >/dev/null 2>&1
     echo `cat $file` | perl -pe "s/\"finalizers\": \[.*?\]/\"finalizers\": \[\]/g" > "$file" >/dev/null 2>&1
     kubectl replace --raw "/api/v1/namespaces/$1/finalize" -f "$file" >/dev/null 2>&1
