@@ -24,11 +24,22 @@ else
   raw_url="https://raw.githubusercontent.com"
 fi
 
-sudo yum -y update && sudo yum -y install zsh git
+# Manualy install zsh v5.9
+yum update -y && yum install -y git make ncurses-devel gcc autoconf man
+wget https://udomain.dl.sourceforge.net/project/zsh/zsh/5.9/zsh-5.9.tar.xz -O /tmp/zsh.tar.xz
+tar -xf /tmp/zsh.tar.xz -C /tmp
+current_dir=$(pwd)
+cd /tmp/zsh-5.9
+./Util/preconfig && ./configure
+make -j 20 install.bin install.modules install.fns
+command -v zsh | sudo tee -a /etc/shells
+chsh -s /usr/local/bin/zsh
+cd $current_dir
+# Install oh-my-zsh
 # The REMOTE environment variable is used to mirror the repository.
 curl -fsSL $raw_url/ohmyzsh/ohmyzsh/master/tools/install.sh | REMOTE="$github_url/ohmyzsh/ohmyzsh.git" sh -s - -y
 curl -fsSL $raw_url/ohmyzsh/ohmyzsh/master/tools/install.sh | sh -s - -y
 git clone $github_url/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 git clone $github_url/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 curl -fsSL $raw_url/aliuq/config/master/bash/.zshrc > ~/.zshrc
-chsh -s /bin/zsh root
+
