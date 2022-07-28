@@ -84,10 +84,35 @@ function kdns() {
   if [ $1 ]; then
     file="$1_tmp.json"
     kubectl get namespace $1 -o json > $file >/dev/null 2>&1
-    echo `cat $file` | perl -pe "s/\"finalizers\": \[.*?\]/\"finalizers\": \[\]/g" > "$file" >/dev/null 2>&1
+    echo `cat $file` | perl -pe "s/\"finalizers\": \[.*?\]/\"finalizers\": \[\]/g" | xargs echo > $file >/dev/null 2>&1
     kubectl replace --raw "/api/v1/namespaces/$1/finalize" -f "$file" >/dev/null 2>&1
-    echo "namespace $1 is deleted"
+    if [ $? -eq 0 ]; then
+      echo "namespace $1 deleted"
+    else
+      echo "failed deleted namespace $1"
+    fi
     rm $file -rf
     return 0
   fi
 }
+
+kde() {
+  if [ $1 ]; then
+    kubectl get pods -A | grep $1 | awk '{print $1,$2}' | while read ns name; do
+      kubectl delete -n $ns pod $name
+    done
+  fi
+}
+
+_kde_comp() {
+  local curword="${COMP_WORDS[COMP_CWORD]}"
+  if [ $curword ]; then
+    pods=$(kubectl get pods -A | grep $curword | awk '{print $2}')
+  else
+    pods=$(kubectl get pods -A | awk '{if (NR>1){print $2}}')
+  fi
+  local completions=(${(@f)pods})
+  _describe 'command' completions
+}
+
+compdef _kde_comp kde
