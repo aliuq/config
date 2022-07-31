@@ -38,7 +38,6 @@ cd $current_dir
 # Install oh-my-zsh
 # The REMOTE environment variable is used to mirror the repository.
 curl -fsSL $raw_url/ohmyzsh/ohmyzsh/master/tools/install.sh | REMOTE="$github_url/ohmyzsh/ohmyzsh.git" sh -s - -y
-curl -fsSL $raw_url/ohmyzsh/ohmyzsh/master/tools/install.sh | sh -s - -y
 git clone $github_url/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 git clone $github_url/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 curl -fsSL $raw_url/aliuq/config/master/bash/.zshrc > ~/.zshrc
