@@ -24,17 +24,24 @@ if ! $mirror; then
   RAW_URL="https://raw.githubusercontent.com"
 fi
 
-# Manualy install zsh v5.9
-yum update -y && yum install -y git make ncurses-devel gcc autoconf man
-wget https://udomain.dl.sourceforge.net/project/zsh/zsh/5.9/zsh-5.9.tar.xz -O /tmp/zsh.tar.xz
-tar -xf /tmp/zsh.tar.xz -C /tmp
-current_dir=$(pwd)
-cd /tmp/zsh-5.9
-./Util/preconfig && ./configure
-make -j 20 install.bin install.modules install.fns
-command -v zsh | sudo tee -a /etc/shells
-chsh -s /usr/local/bin/zsh
-cd $current_dir
+command_exists() {
+  command -v "$@" >/dev/null 2>&1
+}
+
+if ! command_exists zsh; then
+	# Manualy install zsh v5.9
+	yum update -y && yum install -y git make ncurses-devel gcc autoconf man
+	wget https://udomain.dl.sourceforge.net/project/zsh/zsh/5.9/zsh-5.9.tar.xz -O /tmp/zsh.tar.xz
+	tar -xf /tmp/zsh.tar.xz -C /tmp
+	current_dir=$(pwd)
+	cd /tmp/zsh-5.9
+	./Util/preconfig && ./configure
+	make -j 20 install.bin install.modules install.fns
+	command -v zsh | sudo tee -a /etc/shells
+	chsh -s /usr/local/bin/zsh
+	cd $current_dir
+fi
+
 # Install oh-my-zsh
 # The REMOTE environment variable is used to mirror the repository.
 curl -fsSL $RAW_URL/ohmyzsh/ohmyzsh/master/tools/install.sh | REMOTE="$HUB_URL/ohmyzsh/ohmyzsh.git" sh -s - -y
