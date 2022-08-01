@@ -71,6 +71,7 @@ source <(kubectl completion zsh)
 alias k='kubectl'
 alias kc='kubectl config'
 alias kpods='kubectl get pods -A'
+alias kpod='kubectl get pods'
 alias knodes='kubectl get nodes'
 
 function klogs() {
@@ -116,3 +117,4 @@ _kde_comp() {
 }
 
 compdef _kde_comp kde
+compdef _kde_comp klogs
