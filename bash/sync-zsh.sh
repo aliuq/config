@@ -4,7 +4,7 @@
 #    curl -fsSL https://github.com/aliuq/config/raw/master/bash/sync-zsh.sh | sh
 #
 #    Mirror of China:
-#    curl -fsSL https://hub.fastgit.xyz/aliuq/config/raw/master/bash/sync-zsh.sh | sh -s - --mirror
+#    curl -fsSL https://hub.llll.host/aliuq/config/raw/master/bash/sync-zsh.sh | sh -s - --mirror
 #
 
 mirror=false
@@ -16,12 +16,12 @@ while [ $# -gt 0 ]; do
 	shift $(( $# > 0 ? 1 : 0 ))
 done
 
-if $mirror; then
-  github_url="https://hub.fastgit.xyz"
-  raw_url="https://raw.fastgit.org"
-else
-  github_url="https://github.com"
-  raw_url="https://raw.githubusercontent.com"
+RAW_URL=${RAW_URL:-"https://raw.llll.host"}
+HUB_URL=${HUB_URL:-"https://hub.llll.host"}
+
+if ! $mirror; then
+  HUB_URL="https://github.com"
+  RAW_URL="https://raw.githubusercontent.com"
 fi
 
 # Manualy install zsh v5.9
@@ -37,8 +37,8 @@ chsh -s /usr/local/bin/zsh
 cd $current_dir
 # Install oh-my-zsh
 # The REMOTE environment variable is used to mirror the repository.
-curl -fsSL $raw_url/ohmyzsh/ohmyzsh/master/tools/install.sh | REMOTE="$github_url/ohmyzsh/ohmyzsh.git" sh -s - -y
-git clone $github_url/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-git clone $github_url/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-curl -fsSL $raw_url/aliuq/config/master/bash/.zshrc > ~/.zshrc
+curl -fsSL $RAW_URL/ohmyzsh/ohmyzsh/master/tools/install.sh | REMOTE="$HUB_URL/ohmyzsh/ohmyzsh.git" sh -s - -y
+git clone $HUB_URL/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+git clone $HUB_URL/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+curl -fsSL $RAW_URL/aliuq/config/master/bash/.zshrc > ~/.zshrc
 
