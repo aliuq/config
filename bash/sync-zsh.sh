@@ -30,7 +30,7 @@ command_exists() {
 
 if ! command_exists zsh; then
 	# Manualy install zsh v5.9
-	yum update -y && yum install -y git make ncurses-devel gcc autoconf man
+	yum update -y && yum install -y make ncurses-devel gcc autoconf man
 	wget https://udomain.dl.sourceforge.net/project/zsh/zsh/5.9/zsh-5.9.tar.xz -O /tmp/zsh.tar.xz
 	tar -xf /tmp/zsh.tar.xz -C /tmp
 	current_dir=$(pwd)
@@ -42,6 +42,9 @@ if ! command_exists zsh; then
 	cd $current_dir
 fi
 
+if ! command_exists git; then
+	yum install -y git
+fi
 # Install oh-my-zsh
 # The REMOTE environment variable is used to mirror the repository.
 curl -fsSL $RAW_URL/ohmyzsh/ohmyzsh/master/tools/install.sh | REMOTE="$HUB_URL/ohmyzsh/ohmyzsh.git" sh -s - -y
