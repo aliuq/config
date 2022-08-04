@@ -18,10 +18,12 @@ done
 
 RAW_URL=${RAW_URL:-"https://raw.llll.host"}
 HUB_URL=${HUB_URL:-"https://hub.llll.host"}
+ZSH_URL=${ZSH_URL:-"https://aliuq.oss-cn-beijing.aliyuncs.com/zsh-5.9.tar.xz"}
 
 if ! $mirror; then
   HUB_URL="https://github.com"
   RAW_URL="https://raw.githubusercontent.com"
+	ZSH_URL="https://udomain.dl.sourceforge.net/project/zsh/zsh/5.9/zsh-5.9.tar.xz"
 fi
 
 command_exists() {
@@ -31,7 +33,7 @@ command_exists() {
 if ! command_exists zsh; then
 	# Manualy install zsh v5.9
 	yum update -y && yum install -y make ncurses-devel gcc autoconf man
-	wget https://udomain.dl.sourceforge.net/project/zsh/zsh/5.9/zsh-5.9.tar.xz -O /tmp/zsh.tar.xz
+	wget $ZSH_URL -O /tmp/zsh.tar.xz
 	tar -xf /tmp/zsh.tar.xz -C /tmp
 	current_dir=$(pwd)
 	cd /tmp/zsh-5.9
