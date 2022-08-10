@@ -39,6 +39,9 @@ function sr() {
 function sst() {
   systemctl status $1
 }
+function get_ip() {
+  curl -s ip.llll.host
+}
 
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 
