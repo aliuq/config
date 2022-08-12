@@ -80,7 +80,7 @@ alias knodes='kubectl get nodes'
 function klogs() {
   if [ $1 ]; then
     namespace=$(kubectl get pods -A | grep $1 | awk '{print $1}')
-    kubectl logs -n $namespace $1
+    kubectl logs -n $namespace $@
   fi
 }
 
@@ -100,10 +100,22 @@ function kdns() {
   fi
 }
 
-kde() {
-  if [ $1 ]; then
-    kubectl get pods -A | grep $1 | awk '{print $1,$2}' | while read ns name; do
-      kubectl delete -n $ns pod $name
+function kd() {
+  pod=$1
+  if [ $pod ]; then
+    shift
+    kubectl get pods -A | grep $pod | awk '{print $1,$2}' | while read ns name; do
+      kubectl describe -n $ns pod $name $@
+    done
+  fi
+}
+
+function kde() {
+  pod=$1
+  if [ $pod ]; then
+    shift
+    kubectl get pods -A | grep $pod | awk '{print $1,$2}' | while read ns name; do
+      kubectl delete -n $ns pod $name $@
     done
   fi
 }
@@ -121,3 +133,4 @@ _kde_comp() {
 
 compdef _kde_comp kde
 compdef _kde_comp klogs
+compdef _kde_comp kd
