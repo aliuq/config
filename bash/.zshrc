@@ -37,7 +37,7 @@ function sr() {
   systemctl restart $1
 }
 function sst() {
-  systemctl status $1
+  systemctl status $@
 }
 function get_ip() {
   curl -s ip.llll.host
