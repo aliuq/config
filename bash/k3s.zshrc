@@ -97,3 +97,11 @@ _kde_comp() {
 }
 
 compdef _kde_comp kdelpm
+
+ktp() {
+  if [ $# -eq 0 ]; then
+    kubectl top pods -A | awk 'NR == 1 {print $0};NR != 1 {print $0 | "sort -n -k 4 -r"}'
+  else
+    kubectl top pods -A | awk 'NR == 1 {print $0};NR != 1 {print $0 | "sort -n -k 4 -r | grep -P '$1'"}'
+  fi
+}
