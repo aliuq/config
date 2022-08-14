@@ -42,11 +42,17 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 source ~/.bash_profile
 
+# Variables
+# kgpa | awk "$AWK_SPACE{print \$1,\$2}"
+AWK_SPACE="BEGIN { FPAT = \"([[:space:]]*[[:alnum:][:punct:][:digit:]]+)\"; OFS = \"\"; }"
+
 # Alias
 alias s="systemctl"
 alias sr="systemctl restart"
 alias srf="systemctl daemon-reload && systemctl restart"
 alias sst="systemctl status"
+alias sync_zsh_conf_mirror="curl -fsSL https://hub.llll.host/aliuq/config/raw/master/bash/sync_k3s.sh | sh -s - --mirror"
+alias sync_zsh_conf="curl -fsSL https://github.com/aliuq/config/raw/master/bash/sync_k3s.sh | sh"
 
 # Functions
 get_ip() { curl -s ip.llll.host }
