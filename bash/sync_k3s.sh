@@ -39,7 +39,7 @@ fi
 
 # Backup old zsh config
 if [ -f ~/.zshrc ]; then
-  mv ~/.zshrc ~/.zshrc.bak.`date +%Y%m%d%H%M%S`
+  cp ~/.zshrc ~/.zshrc.bak.`date +%Y%m%d%H%M%S`
 fi
 
 # Install zsh-autosuggestions
