@@ -29,12 +29,17 @@ fi
 command_exists() {
   command -v "$@" >/dev/null 2>&1
 }
-if [ ! $ZSH_CACHE_DIR ]; then
+
+if ! command_exists zsh; then
   if ! $mirror; then
-    curl -fsSL "$RAW_URL/aliuq/config/raw/master/bash/install_zsh.sh" | sh
+    curl -fsSL "$RAW_URL/aliuq/config/master/bash/install_zsh.sh" | sh
   else
-    curl -fsSL "$RAW_URL/aliuq/config/raw/master/bash/install_zsh.sh" | sh -s - --mirror
+    curl -fsSL "$RAW_URL/aliuq/config/master/bash/install_zsh.sh" | sh -s - --mirror
   fi
+fi
+
+if ! command_exists git; then
+  yum install -y git
 fi
 
 # Backup old zsh config
