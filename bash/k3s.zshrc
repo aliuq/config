@@ -53,23 +53,32 @@ alias srf="systemctl daemon-reload && systemctl restart"
 alias sst="systemctl status"
 alias sync_zsh_conf_mirror="curl -fsSL https://hub.llll.host/aliuq/config/raw/master/bash/sync_k3s.sh | sh -s - --mirror"
 alias sync_zsh_conf="curl -fsSL https://github.com/aliuq/config/raw/master/bash/sync_k3s.sh | sh"
+alias ktn="kubectl top node"
 
 # Functions
 get_ip() { curl -s ip.llll.host }
 
 # Force delete namespace
 kdelnsf() {
+  if ! command -v jq >/dev/null 2>&1; then
+    echo -e "\e[1;33mjq is not installed, please install it first, \"yum install -y jq\"\e[0m"
+    return 0
+  fi
   if [ $1 ]; then
     file="$1_tmp.json"
+    echo "kubectl get namespace $1 -o json > $file"
     kubectl get namespace $1 -o json > $file >/dev/null 2>&1
-    echo `cat $file` | perl -pe "s/\"finalizers\": \[.*?\]/\"finalizers\": \[\]/g" | xargs echo > $file >/dev/null 2>&1
-    kubectl replace --raw "/api/v1/namespaces/$1/finalize" -f "$file" >/dev/null 2>&1
+    echo "echo \`cat $file\` | perl -pe \"s/\\\"finalizers\\\": \[.*?\]/\\\"finalizers\\\": \[\]/g\" | jq . > $file"
+    echo `cat $file` | perl -pe "s/\"finalizers\": \[.*?\]/\"finalizers\": \[\]/g" | jq . > $file >/dev/null 2>&1
+    echo "kubectl replace --raw \"/api/v1/namespaces/$1/finalize\" -f $file"
+    kubectl replace --raw "/api/v1/namespaces/$1/finalize" -f $file >/dev/null 2>&1
     if [ $? -eq 0 ]; then
       echo "namespace $1 deleted"
+      echo "rm $file -rf"
+      rm $file -rf
     else
       echo "failed deleted namespace $1"
     fi
-    rm $file -rf
     return 0
   fi
 }
