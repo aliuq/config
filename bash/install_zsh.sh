@@ -1,10 +1,11 @@
 #! /bin/sh
+set -e
 #
 # Usage
-#    curl -fsSL https://github.com/aliuq/config/raw/master/bash/sync-zsh.sh | sh
+#    curl -fsSL https://github.com/aliuq/config/raw/master/bash/install_zsh.sh | sh
 #
 #    Mirror of China:
-#    curl -fsSL https://hub.llll.host/aliuq/config/raw/master/bash/sync-zsh.sh | sh -s - --mirror
+#    curl -fsSL https://hub.llll.host/aliuq/config/raw/master/bash/install_zsh.sh | sh -s - --mirror
 #
 
 mirror=false
