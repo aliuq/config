@@ -49,7 +49,7 @@ fi
 
 # Install zsh-autosuggestions
 autosuggestionsDir="${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions"
-if [ ! -d "$autosuggestionsDir" ]; then
+if [[ ! -d "$autosuggestionsDir" ]]; then
   git clone $HUB_URL/zsh-users/zsh-autosuggestions $autosuggestionsDir
 else
   echo -e "\e[1;32mzsh-autosuggestions is already installed in $autosuggestionsDir\e[0m"
@@ -57,7 +57,7 @@ fi
 
 # Install zsh-syntax-highlighting
 syntaxHighlightingDir="${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting"
-if [ ! -d "$syntaxHighlightingDir" ]; then
+if [[ ! -d "$syntaxHighlightingDir" ]]; then
   git clone $HUB_URL/zsh-users/zsh-syntax-highlighting $syntaxHighlightingDir
 else
   echo -e "\e[1;32mzsh-syntax-highlighting is already installed in $syntaxHighlightingDir\e[0m"
