@@ -19,12 +19,10 @@ done
 
 RAW_URL=${RAW_URL:-"https://raw.llll.host"}
 HUB_URL=${HUB_URL:-"https://hub.llll.host"}
-ZSH_URL=${ZSH_URL:-"https://dl.llll.host/https://udomain.dl.sourceforge.net/project/zsh/zsh/5.9/zsh-5.9.tar.xz"}
 
 if ! $mirror; then
   HUB_URL="https://github.com"
   RAW_URL="https://raw.githubusercontent.com"
-  ZSH_URL="https://udomain.dl.sourceforge.net/project/zsh/zsh/5.9/zsh-5.9.tar.xz"
 fi
 
 command_exists() {
