@@ -48,8 +48,10 @@ if [ -f ~/.zshrc ]; then
   cp ~/.zshrc ~/.zshrc.bak.`date +%Y%m%d%H%M%S`
 fi
 
+custom_dir=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}
+
 # Install zsh-autosuggestions
-autosuggestionsDir="${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions"
+autosuggestionsDir="$custom_dir/plugins/zsh-autosuggestions"
 if [ ! -d "$autosuggestionsDir" ]; then
   git clone $HUB_URL/zsh-users/zsh-autosuggestions $autosuggestionsDir
 else
@@ -57,7 +59,7 @@ else
 fi
 
 # Install zsh-syntax-highlighting
-syntaxHighlightingDir="${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting"
+syntaxHighlightingDir="$custom_dir/plugins/zsh-syntax-highlighting"
 if [ ! -d "$syntaxHighlightingDir" ]; then
   git clone $HUB_URL/zsh-users/zsh-syntax-highlighting $syntaxHighlightingDir
 else
