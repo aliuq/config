@@ -52,3 +52,19 @@ fi
 # The REMOTE environment variable is used to mirror the repository.
 curl -fsSL $RAW_URL/ohmyzsh/ohmyzsh/master/tools/install.sh | REMOTE="$HUB_URL/ohmyzsh/ohmyzsh.git" sh -s - -y
 
+# # 记录下 Ubuntu 下的操作
+# sudo apt-get update
+# sudo apt-get install -y build-essential curl git libncurses-dev
+
+# curl -LO https://sourceforge.net/projects/zsh/files/latest/download
+# tar xvf download
+# cd zsh-*
+
+# ./configure
+# make
+# sudo make install
+
+# sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+# command -v zsh | sudo tee -a /etc/shells
+# chsh -s /usr/local/bin/zsh
