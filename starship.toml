@@ -1,0 +1,24 @@
+# 设置配置范例，开启编辑器的自动补全
+"$schema" = 'https://starship.rs/config-schema.json'
+
+[cmd_duration]
+show_milliseconds = true
+show_notifications = true
+
+[localip]
+ssh_only = false
+format = "[IP:$localipv4](bold red) "
+disabled = false
+
+[memory_usage]
+disabled = false
+threshold = -1
+format = "[${ram} ${ram_pct}]($style) "
+style = "bold dimmed green"
+
+[time]
+disabled = false
+format = '[\[ $time \]]($style) '
+time_format = "%T"
+utc_time_offset = "+8"
+style = "bold dimmed blue"
