@@ -1,16 +1,16 @@
 # 设置配置范例，开启编辑器的自动补全
 "$schema" = 'https://starship.rs/config-schema.json'
 
-[cmd_duration]
-show_milliseconds = true
-# show_notifications = false
-format = "took [$duration](bold yellow)"
-
 [username]
 style_user = "yellow bold"
 style_root = "red bold"
 format = "[$user]($style) "
 show_always = true
+
+[hostname]
+ssh_only = false
+format = 'on [$hostname]($style) '
+disabled = false
 
 [localip]
 ssh_only = false
@@ -30,8 +30,6 @@ time_format = "%T"
 utc_time_offset = "+8"
 style = "bold dimmed blue"
 
-[custom.uptime]
-command = "echo $(uptime -p)"
-when = true
-style = "bold dimmed"
-format = "[uptime: $output]($style)"
+[cmd_duration]
+show_milliseconds = true
+show_notifications = false
