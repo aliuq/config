@@ -3,18 +3,11 @@
 
 [cmd_duration]
 show_milliseconds = true
-# show_notifications = false
-format = "took [$duration](bold yellow)"
-
-[username]
-style_user = "yellow bold"
-style_root = "red bold"
-format = "[$user]($style) "
-show_always = true
+show_notifications = true
 
 [localip]
 ssh_only = false
-format = "in [$localipv4](bold red) "
+format = "[IP:$localipv4](bold red) "
 disabled = false
 
 [memory_usage]
@@ -29,9 +22,3 @@ format = '[\[ $time \]]($style) '
 time_format = "%T"
 utc_time_offset = "+8"
 style = "bold dimmed blue"
-
-[custom.uptime]
-command = "echo $(uptime -p)"
-when = true
-style = "bold dimmed"
-format = "[uptime: $output]($style)"
