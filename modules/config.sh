@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# 个人开发环境管理脚本 - zsh 配置
+# 个人开发环境管理脚本 -  配置模块
 #
 # - 目前仅支持 Ubuntu apt 安装
 #
@@ -15,7 +15,6 @@ EOF
 fi
 
 # ======================== 分割线 ========================
-
 install_zsh_from_source() {
   zsh_version=$(read_input "请输入 zsh 版本(5.9): " 5.9)
   echo
