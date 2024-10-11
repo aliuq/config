@@ -96,7 +96,7 @@ echo_commands() {
 update_packages() {
   log "更新软件包"
   read_confirm "是否更新软件包？(y/n): " || return
-  run "apt update && apt upgrade"
+  run "apt update -y && apt upgrade -y"
 }
 
 change_hostname() {
