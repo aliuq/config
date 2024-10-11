@@ -130,10 +130,6 @@ install_starship() {
     fi
     run "curl -sS https://starship.rs/install.sh | sh"
 
-    if [ "$SHELL" = "/usr/bin/zsh" ]; then
-      run "echo 'eval \"\$(starship init zsh)\"' >>~/.zshrc"
-    fi
-
     # 如果 shell 匹配到 /*\/bash/，且 .bashrc 文件中不包含 【eval "$(starship init bash)"】 则添加
     if echo "$SHELL" | grep -qE "/bash$"; then
       if ! grep -q "eval \"\$(starship init bash)\"" ~/.bashrc; then
@@ -150,7 +146,7 @@ install_starship() {
       fi
     fi
 
-    if read_confirm "是否添加通用配置到 ~/.config/starship.toml？(y/n): "; then
+    if read_confirm "是否添加通用配置到 ~/.config/starship.toml？(y/n): " false; then
       if read_confirm "是否使用 mirror？(y/n): "; then
         RAW_URL="https://raw.llll.host"
       else
@@ -159,6 +155,7 @@ install_starship() {
 
       run "mkdir -p ~/.config"
       run "curl -fsSL $RAW_URL/aliuq/config/master/config/starship.toml >~/.config/starship.toml"
+      run "source ~/.zshrc"
     fi
   fi
 }
