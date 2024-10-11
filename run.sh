@@ -37,7 +37,8 @@ echo_commands() {
   printf "$(green "1.") 更新软件包    $(green "2.") 修改主机名    $(green "q.") 退出\n"
 
   echo "\n\n------------------- $(magenta 配置) -------------------"
-  printf "$(green "100.") 安装 zsh    $(green "101.") 安装 oh-my-zsh    $(green "102.") 覆盖 ~/.zshrc\n"
+  printf "$(green "100.") 安装 zsh            $(green "101.") 安装 oh-my-zsh            $(green "102.") 覆盖 ~/.zshrc\n"
+  printf "$(green "103.") 安装 starship\n"
 
   echo "\n\n------------------- $(magenta 前端) -------------------"
   printf "$(green "200.") 安装 nvm    \n"
@@ -63,6 +64,9 @@ echo_commands() {
     ;;
   102)
     sync_zshrc
+    ;;
+  103)
+    install_starship
     ;;
   200)
     install_nvm

@@ -118,3 +118,47 @@ install_zsh() {
   echo
   sync_zshrc
 }
+
+install_starship() {
+  log "安装 starship"
+
+  if read_confirm "是否安装 starship？(y/n): "; then
+    if $dry_run; then
+      run "commands_valid curl"
+    else
+      commands_valid curl
+    fi
+    run "curl -sS https://starship.rs/install.sh | sh"
+
+    if [ "$SHELL" = "/usr/bin/zsh" ]; then
+      run "echo 'eval \"\$(starship init zsh)\"' >>~/.zshrc"
+    fi
+
+    # 如果 shell 匹配到 /*\/bash/，且 .bashrc 文件中不包含 【eval "$(starship init bash)"】 则添加
+    if echo "$SHELL" | grep -qE "/bash$"; then
+      if ! grep -q "eval \"\$(starship init bash)\"" ~/.bashrc; then
+        run "echo 'eval \"\$(starship init bash)\"' >>~/.bashrc"
+        run "source ~/.bashrc"
+      fi
+    fi
+
+    # 如果 shell 匹配到 /*\/zsh/，且 .zshrc 文件中不包含 【eval "$(starship init zsh)"】 则添加
+    if echo "$SHELL" | grep -qE "/zsh$"; then
+      if ! grep -q "eval \"\$(starship init zsh)\"" ~/.zshrc; then
+        run "echo 'eval \"\$(starship init zsh)\"' >>~/.zshrc"
+        run "source ~/.zshrc"
+      fi
+    fi
+
+    if read_confirm "是否添加通用配置到 ~/.config/starship.toml？(y/n): "; then
+      if read_confirm "是否使用 mirror？(y/n): "; then
+        RAW_URL="https://raw.llll.host"
+      else
+        RAW_URL="https://raw.githubusercontent.com"
+      fi
+
+      run "mkdir -p ~/.config"
+      run "curl -fsSL $RAW_URL/aliuq/config/master/config/starship.toml >~/.config/starship.toml"
+    fi
+  fi
+}
