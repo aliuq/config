@@ -149,15 +149,16 @@ install_starship() {
         run "echo 'eval \"\$(starship init bash)\"' >>~/.bashrc"
       fi
       install_starship_add_config
-      if $dry_run; then run "source ~/.bashrc"; else source ~/.bashrc; fi
+      if $dry_run; then run ". ~/.bashrc"; else . ~/.bashrc; fi
+    fi
 
     # 如果 shell 匹配到 /*\/zsh/，且 .zshrc 文件中不包含 【eval "$(starship init zsh)"】 则添加
-    elif echo "$SHELL" | grep -qE "/zsh$"; then
+    if echo "$SHELL" | grep -qE "/zsh$"; then
       if ! grep -q "eval \"\$(starship init zsh)\"" ~/.zshrc; then
         run "echo 'eval \"\$(starship init zsh)\"' >>~/.zshrc"
       fi
       install_starship_add_config
-      if $dry_run; then run "source ~/.zshrc"; else source ~/.zshrc; fi
+      if $dry_run; then run ". ~/.zshrc"; else . ~/.zshrc; fi
     fi
   fi
 }
