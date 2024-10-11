@@ -109,7 +109,11 @@ install_zsh() {
     else
       install_zsh_from_source
     fi
-    run "chsh -s $(command -v zsh)"
+    if $dry_run; then
+      run "chsh -s $(which zsh)"
+    else
+      chsh -s $(which zsh)
+    fi
   fi
 
   echo
