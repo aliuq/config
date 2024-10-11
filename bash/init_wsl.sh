@@ -217,7 +217,7 @@ alias l='ls -CF'
 
 function get_ip() { curl -s ip.llll.host }
 
-export PATH=\$HOME/bin:/usr/local/bin:\$PATH
+export PATH=\\\$HOME/bin:/usr/local/bin:\\\$PATH
 EOF"
 }
 
