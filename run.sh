@@ -15,6 +15,15 @@ $(curl -sSL https://raw.githubusercontent.com/aliuq/config/refs/heads/master/mod
 $(curl -sSL https://raw.githubusercontent.com/aliuq/config/refs/heads/master/modules/web.sh)
 EOF
 
+# 测试
+# . /dev/stdin <<EOF
+# $(curl -sSL https://s.xod.cc/shell-helper-mirror)
+# EOF
+
+# . /home/aliuq/apps/config/modules/system.sh
+# . /home/aliuq/apps/config/modules/config.sh
+# . /home/aliuq/apps/config/modules/web.sh
+
 # ======================== 分割线 ========================
 echo_commands() {
   clear
