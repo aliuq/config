@@ -111,10 +111,7 @@ change_hostname() {
   info "主机名修改成功，$(cyan $HOSTNAME) => $(cyan $new_hostname)"
 }
 
-install_zsh() {
-  log "安装 zsh"
-  read_confirm "是否安装 zsh？(y/n): " || return
-
+install_zsh_from_source() {
   zsh_version=$(read_input "请输入 zsh 版本(5.9): " 5.9)
   echo
   mirror_url=$(read_confirm_and_input "是否使用 mirror，结尾不要有斜杠/ (y/n): " "https://dl.llll.host")
@@ -143,64 +140,80 @@ install_zsh() {
   run "cd /tmp/zsh-$zsh_version && ./Util/preconfig && ./configure --without-tcsetpgrp --prefix=/usr --bindir=/bin && make -j 20 install.bin install.modules install.fns"
   run "cd $current_dir && rm -rf /tmp/zsh.tar.xz && rm -rf /tmp/zsh-$zsh_version"
   run "zsh --version && echo \"/bin/zsh\" | tee -a /etc/shells && echo \"/usr/bin/zsh\" | tee -a /etc/shells"
-  run "chsh -s /usr/bin/zsh"
+}
+
+install_zsh() {
+  log "安装 zsh"
+
+  if read_confirm "是否安装 zsh？(y/n): "; then
+    install_type=$(read_input "请选择安装方式(1. apt 安装，2. 源码安装，默认为 1): " "1")
+    if [ "$install_type" = "1" ]; then
+      run "apt install -y zsh"
+    else
+      install_zsh_from_source
+    fi
+    run "chsh -s /usr/bin/zsh"
+  fi
 
   echo
   install_oh_my_zsh
   echo
   sync_zshrc
+
+  echo done
 }
 
 install_oh_my_zsh() {
   log "安装 oh-my-zsh"
-  read_confirm "是否安装 oh-my-zsh？(y/n): " false || return
 
-  if read_confirm "是否使用 mirror？(y/n): "; then
-    HUB_URL="https://hub.llll.host"
-    RAW_URL="https://raw.llll.host"
-  else
-    HUB_URL="https://github.com"
-    RAW_URL="https://raw.githubusercontent.com"
-  fi
+  if read_confirm "是否安装 oh-my-zsh？(y/n): " false; then
+    if read_confirm "是否使用 mirror？(y/n): "; then
+      HUB_URL="https://hub.llll.host"
+      RAW_URL="https://raw.llll.host"
+    else
+      HUB_URL="https://github.com"
+      RAW_URL="https://raw.githubusercontent.com"
+    fi
 
-  ZSH_CUSTOM=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}
+    ZSH_CUSTOM=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}
 
-  if $dry_run; then
-    run "commands_valid curl git"
-  else
-    commands_valid curl git
-  fi
-  url="$RAW_URL/ohmyzsh/ohmyzsh/master/tools/install.sh"
-  run "curl -fsSL \"$url\" | sh -s - -y"
+    if $dry_run; then
+      run "commands_valid curl git"
+    else
+      commands_valid curl git
+    fi
+    url="$RAW_URL/ohmyzsh/ohmyzsh/master/tools/install.sh"
+    run "curl -fsSL \"$url\" | sh -s - -y"
 
-  # zsh-autosuggestions
-  autosuggestionsDir="$ZSH_CUSTOM/plugins/zsh-autosuggestions"
-  if [ ! -d "$autosuggestionsDir" ]; then
-    run "git clone $HUB_URL/zsh-users/zsh-autosuggestions $autosuggestionsDir"
-  else
-    cyan "zsh-autosuggestions is already installed in $autosuggestionsDir"
-  fi
+    # zsh-autosuggestions
+    autosuggestionsDir="$ZSH_CUSTOM/plugins/zsh-autosuggestions"
+    if [ ! -d "$autosuggestionsDir" ]; then
+      run "git clone $HUB_URL/zsh-users/zsh-autosuggestions $autosuggestionsDir"
+    else
+      cyan "zsh-autosuggestions is already installed in $autosuggestionsDir"
+    fi
 
-  # zsh-syntax-highlighting
-  syntaxHighlightingDir="$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
-  if [ ! -d "$syntaxHighlightingDir" ]; then
-    run "git clone $HUB_URL/zsh-users/zsh-syntax-highlighting.git $syntaxHighlightingDir"
-  else
-    cyan "zsh-syntax-highlighting is already installed in $syntaxHighlightingDir"
+    # zsh-syntax-highlighting
+    syntaxHighlightingDir="$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
+    if [ ! -d "$syntaxHighlightingDir" ]; then
+      run "git clone $HUB_URL/zsh-users/zsh-syntax-highlighting.git $syntaxHighlightingDir"
+    else
+      cyan "zsh-syntax-highlighting is already installed in $syntaxHighlightingDir"
+    fi
   fi
 }
 
 sync_zshrc() {
   log "同步 zshrc，执行会追加一些内容到 ~/.zshrc，最好只执行一次！！！"
-  read_confirm "是否更新 zshrc？(y/n): " || return
 
-  # 修改主题为 agnoster
-  run "sed -i 's/ZSH_THEME=\"robbyrussell\"/ZSH_THEME=\"agnoster\"/g' ~/.zshrc"
-  # 添加插件
-  run "sed -i 's/plugins=(git)/plugins=(git zsh-autosuggestions zsh-syntax-highlighting)/g' ~/.zshrc"
+  if read_confirm "是否更新 zshrc？(y/n): "; then
+    # 修改主题为 agnoster
+    run "sed -i 's/ZSH_THEME=\"robbyrussell\"/ZSH_THEME=\"agnoster\"/g' ~/.zshrc"
+    # 添加插件
+    run "sed -i 's/plugins=(git)/plugins=(git zsh-autosuggestions zsh-syntax-highlighting)/g' ~/.zshrc"
 
-  # 将多行文本，写入到 ~/.zshrc 文件中
-  run "cat >>~/.zshrc <<-EOF
+    # 将多行文本，写入到 ~/.zshrc 文件中
+    run "cat >>~/.zshrc <<-EOF
 
 # Enable aliases to be sudo’ed
 # http://askubuntu.com/questions/22037/aliases-not-available-when-using-sudo
@@ -221,6 +234,7 @@ function get_ip() { curl -s ip.llll.host }
 
 export PATH=\\\$HOME/bin:/usr/local/bin:\\\$PATH
 EOF"
+  fi
 }
 
 install_nvm() {
