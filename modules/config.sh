@@ -94,7 +94,7 @@ sync_zshrc() {
     else
       RAW_URL="https://raw.githubusercontent.com"
     fi
-    run "curl -fsSL $RAW_URL/aliuq/config/master/bash/.zshrc >~/.zshrc"
+    run "curl -fsSL $RAW_URL/aliuq/config/master/config/.zshrc >~/.zshrc"
     run "source ~/.zshrc"
   fi
 }

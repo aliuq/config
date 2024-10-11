@@ -20,7 +20,7 @@ echo_commands() {
   clear
   printf "$(gray 脚本名称)    : $(white "个人开发环境管理脚本")\n"
   printf "$(gray 当前版本)    : 1.0.0\n"
-  printf "$(gray 作者)        : AliuQ<https://github.com/aliuq>\n"
+  printf "$(gray 作者)        : AliuQ <https://github.com/aliuq>\n"
   printf "$(gray 脚本描述)    : 安装通用的环境和依赖，确保各机器之间保持体验一致\n"
   printf "$(gray 运行环境)    : $(red WSL2 Ubuntu)\n"
   printf "$(gray "所用 Shell")  : sh\n"
