@@ -8,21 +8,25 @@
 #
 set -e
 
-. /dev/stdin <<EOF
-$(curl -sSL https://s.xod.cc/shell-helper-mirror)
-$(curl -sSL https://raw.githubusercontent.com/aliuq/config/refs/heads/master/modules/system.sh)
-$(curl -sSL https://raw.githubusercontent.com/aliuq/config/refs/heads/master/modules/config.sh)
-$(curl -sSL https://raw.githubusercontent.com/aliuq/config/refs/heads/master/modules/web.sh)
-EOF
-
-# 测试
 # . /dev/stdin <<EOF
 # $(curl -sSL https://s.xod.cc/shell-helper-mirror)
+# $(curl -sSL https://raw.githubusercontent.com/aliuq/config/refs/heads/master/modules/system.sh)
+# $(curl -sSL https://raw.githubusercontent.com/aliuq/config/refs/heads/master/modules/config.sh)
+# $(curl -sSL https://raw.githubusercontent.com/aliuq/config/refs/heads/master/modules/web.sh)
 # EOF
+
+# 测试
+. /dev/stdin <<EOF
+$(curl -sSL https://s.xod.cc/shell-helper-mirror)
+EOF
 
 # . /home/aliuq/apps/config/modules/system.sh
 # . /home/aliuq/apps/config/modules/config.sh
 # . /home/aliuq/apps/config/modules/web.sh
+
+. /f/config/modules/system.sh
+. /f/config/modules/config.sh
+. /f/config/modules/web.sh
 
 # ======================== 分割线 ========================
 echo_commands() {
@@ -42,14 +46,15 @@ echo_commands() {
   DESCRIPTION="安装通用的环境和依赖，确保各机器之间保持体验一致"
   REQUIRED_SHELL="sh"
 
-  echo "------------------- $(magenta 系统) -------------------"
+  printf "\n------------------- $(magenta "系统") -------------------\n"
   printf "$(green "1.") 更新软件包    $(green "2.") 修改主机名    $(green "q.") 退出\n"
+  printf "$(green "3.") 修改 ssh 端口\n"
 
-  echo "\n\n------------------- $(magenta 配置) -------------------"
+  printf "\n\n------------------- $(magenta "配置") -------------------\n"
   printf "$(green "100.") 安装 zsh            $(green "101.") 安装 oh-my-zsh            $(green "102.") 覆盖 ~/.zshrc\n"
   printf "$(green "103.") 安装 starship       $(green "104.") 添加 waketime\n"
 
-  echo "\n\n------------------- $(magenta 前端) -------------------"
+  printf "\n\n------------------- $(magenta 前端) -------------------\n"
   printf "$(green "200.") 安装 nvm    \n"
 
   echo
@@ -64,6 +69,9 @@ echo_commands() {
     ;;
   2)
     change_hostname
+    ;;
+  3)
+    change_ssh_port
     ;;
   100)
     install_zsh
