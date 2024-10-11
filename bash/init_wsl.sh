@@ -3,6 +3,8 @@
 #
 # 初始化 WSL 环境和依赖
 #
+# sh <(curl -L -s https://raw.githubusercontent.com/aliuq/config/refs/heads/master/bash/init_wsl.sh)
+#
 
 set -e
 
@@ -121,7 +123,11 @@ install_zsh() {
   info "mirror  url: $(cyan $mirror_url)"
   echo
 
-  run "commands_valid curl tar"
+  if $dry_run; then
+    run "commands_valid curl tar"
+  else
+    commands_valid curl tar
+  fi
   url="https://sourceforge.net/projects/zsh/files/zsh/$zsh_version/zsh-$zsh_version.tar.xz/download"
   download_url=$(curl -s "$url" | grep -oP "(?<=href=\")[^\"]+(?=\")")
   sleep 1
@@ -157,7 +163,11 @@ install_oh_my_zsh() {
 
   ZSH_CUSTOM=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}
 
-  run "commands_valid curl git"
+  if $dry_run; then
+    run "commands_valid curl git"
+  else
+    commands_valid curl git
+  fi
   url="$RAW_URL/ohmyzsh/ohmyzsh/master/tools/install.sh"
   run "curl -fsSL \"$url\" | sh -s - -y"
 
