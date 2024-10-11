@@ -159,8 +159,6 @@ install_zsh() {
   install_oh_my_zsh
   echo
   sync_zshrc
-
-  echo done
 }
 
 install_oh_my_zsh() {
@@ -243,8 +241,8 @@ install_nvm() {
 
   # 判断当前终端 echo $SHELL 是否是 zsh
   if [ "$SHELL" != "/usr/bin/zsh" ]; then
-    red "==> 当前终端不是 zsh，请先安装 zsh"
-    read_confirm "是否继续安装 nvm？(y/n): " || return
+    red "==> 当前终端不是 zsh，请在 zsh 环境下执行"
+    return
   fi
 
   if $dry_run; then
@@ -256,6 +254,11 @@ install_nvm() {
   version=$(read_input "请输入 nvm 版本(默认最新版 master/v0.40.1): " "master")
   echo
   run "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/$version/install.sh | bash"
+
+  echo
+  info "安装完成，请执行 $(cyan "source ~/.zshrc") 使配置生效"
+  info "安装完成后，可以执行 $(cyan "nvm install lts") 安装最新的 LTS 版本"
+  echo
 }
 
 # ======================== 分割线 ========================
