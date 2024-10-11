@@ -52,6 +52,8 @@ change_ssh_port() {
     echo
     yellow "=> SSH 端口修改成功，$(cyan 22) => $(cyan $new_port)"
     yellow "=> 在云服务器中时，请在云服务商的安全组中开放新的 SSH 端口 $(cyan $new_port)"
-    yellow "=> 最后不要忘了重启服务器 $(cyan reboot)"
+    yellow "=> 最后不要忘了重启服务器 $(cyan "sudo reboot")"
+
+    read_confirm "是否立即重启服务器？(y/n): " && run "sudo reboot"
   fi
 }
