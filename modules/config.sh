@@ -155,7 +155,12 @@ install_starship() {
 
       run "mkdir -p ~/.config"
       run "curl -fsSL $RAW_URL/aliuq/config/master/config/starship.toml >~/.config/starship.toml"
-      run "source ~/.zshrc"
+      if echo "$SHELL" | grep -qE "/bash$"; then
+        run "source ~/.bashrc"
+      fi
+      if echo "$SHELL" | grep -qE "/zsh$"; then
+        run "source ~/.zshrc"
+      fi
     fi
   fi
 }
