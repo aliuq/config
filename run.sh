@@ -8,25 +8,21 @@
 #
 set -e
 
-# . /dev/stdin <<EOF
-# $(curl -sSL https://s.xod.cc/shell-helper-mirror)
-# $(curl -sSL https://raw.githubusercontent.com/aliuq/config/refs/heads/master/modules/system.sh)
-# $(curl -sSL https://raw.githubusercontent.com/aliuq/config/refs/heads/master/modules/config.sh)
-# $(curl -sSL https://raw.githubusercontent.com/aliuq/config/refs/heads/master/modules/web.sh)
-# EOF
+. /dev/stdin <<EOF
+$(curl -sSL https://raw.githubusercontent.com/aliuq/config/refs/heads/master/helper.sh)
+$(curl -sSL https://raw.githubusercontent.com/aliuq/config/refs/heads/master/modules/system.sh)
+$(curl -sSL https://raw.githubusercontent.com/aliuq/config/refs/heads/master/modules/config.sh)
+$(curl -sSL https://raw.githubusercontent.com/aliuq/config/refs/heads/master/modules/web.sh)
+EOF
 
 # 测试
-. /dev/stdin <<EOF
-$(curl -sSL https://s.xod.cc/shell-helper-mirror)
-EOF
+# . /dev/stdin <<EOF
+# $(curl -sSL https://s.xod.cc/shell-helper-mirror)
+# EOF
 
 # . /home/aliuq/apps/config/modules/system.sh
 # . /home/aliuq/apps/config/modules/config.sh
 # . /home/aliuq/apps/config/modules/web.sh
-
-. /f/config/modules/system.sh
-. /f/config/modules/config.sh
-. /f/config/modules/web.sh
 
 # ======================== 分割线 ========================
 echo_commands() {
