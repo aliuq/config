@@ -110,9 +110,9 @@ install_zsh() {
       install_zsh_from_source
     fi
     if $dry_run; then
-      run "chsh -s $(which zsh)"
+      run "sudo chsh -s $(which zsh)"
     else
-      chsh -s $(which zsh)
+      sudo chsh -s $(which zsh)
     fi
   fi
 
