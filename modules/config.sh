@@ -162,3 +162,22 @@ install_starship() {
     fi
   fi
 }
+
+add_wakatime() {
+  log "添加 wakatime"
+
+  if read_confirm "是否添加通用配置到 ~/.wakatime.cfg？(y/n): " false; then
+    api_url=$(read_input "请输入 api_url: ")
+    api_key=$(read_input "请输入 api_key: ")
+
+    if [ -z "$api_url" ] || [ -z "$api_key" ]; then
+      red "api_url 和 api_key 不能为空"
+    else
+      run "cat >~/.wakatime.cfg <<-EOF
+[settings]
+api_url = $api_url
+api_key = $api_key
+EOF"
+    fi
+  fi
+}
