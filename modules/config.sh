@@ -95,7 +95,7 @@ sync_zshrc() {
       RAW_URL="https://raw.githubusercontent.com"
     fi
     run "curl -fsSL $RAW_URL/aliuq/config/master/config/.zshrc >~/.zshrc"
-    run "source ~/.zshrc"
+    info "\n\n请执行 $(cyan "source ~/.zshrc") 使配置生效"
   fi
 }
 
@@ -149,7 +149,7 @@ install_starship() {
         run "echo 'eval \"\$(starship init bash)\"' >>~/.bashrc"
       fi
       install_starship_add_config
-      if $dry_run; then run ". ~/.bashrc"; else . ~/.bashrc; fi
+      info "\n\n请执行 $(cyan "source ~/.bashrc") 使配置生效"
     fi
 
     # 如果 shell 匹配到 /*\/zsh/，且 .zshrc 文件中不包含 【eval "$(starship init zsh)"】 则添加
@@ -158,7 +158,7 @@ install_starship() {
         run "echo 'eval \"\$(starship init zsh)\"' >>~/.zshrc"
       fi
       install_starship_add_config
-      if $dry_run; then run ". ~/.zshrc"; else . ~/.zshrc; fi
+      info "\n\n请执行 $(cyan "source ~/.zshrc") 使配置生效"
     fi
   fi
 }
