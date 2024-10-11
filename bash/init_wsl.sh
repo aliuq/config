@@ -28,7 +28,7 @@ echo_help() {
 }
 
 echo_commands() {
-  array="更新软件包|修改主机名并同步到 /etc/hosts|安装 zsh|安装 oh-my-zsh|同步 zshrc|退出"
+  array="更新软件包|修改主机名并同步到 /etc/hosts|安装 zsh|安装 oh-my-zsh|同步 zshrc|安装 nvm|退出"
   IFS="|"
 
   # 脚本信息
@@ -60,7 +60,7 @@ echo_commands() {
   index=1
   for item in $array; do
     if [ "$item" = "退出" ]; then
-      echo "$(green $index/q)   $(cyan $item)"
+      echo "$(green q)     $(cyan $item)"
     else
       echo "$(green $index)     $(cyan $item)"
     fi
@@ -80,7 +80,8 @@ echo_commands() {
   3) install_zsh ;;
   4) install_oh_my_zsh ;;
   5) sync_zshrc ;;
-  6 | q) exit 0 ;;
+  6) install_nvm ;;
+  q) exit 0 ;;
   *)
     red "命令编号错误: $command_index"
     exit 1
@@ -142,6 +143,7 @@ install_zsh() {
   run "cd /tmp/zsh-$zsh_version && ./Util/preconfig && ./configure --without-tcsetpgrp --prefix=/usr --bindir=/bin && make -j 20 install.bin install.modules install.fns"
   run "cd $current_dir && rm -rf /tmp/zsh.tar.xz && rm -rf /tmp/zsh-$zsh_version"
   run "zsh --version && echo \"/bin/zsh\" | tee -a /etc/shells && echo \"/usr/bin/zsh\" | tee -a /etc/shells"
+  run "chsh -s /usr/bin/zsh"
 
   echo
   install_oh_my_zsh
@@ -219,6 +221,27 @@ function get_ip() { curl -s ip.llll.host }
 
 export PATH=\\\$HOME/bin:/usr/local/bin:\\\$PATH
 EOF"
+}
+
+install_nvm() {
+  log "安装 nvm"
+  read_confirm "是否安装 nvm？(y/n): " || return
+
+  # 判断当前终端 echo $SHELL 是否是 zsh
+  if [ "$SHELL" != "/usr/bin/zsh" ]; then
+    red "==> 当前终端不是 zsh，请先安装 zsh"
+    read_confirm "是否继续安装 nvm？(y/n): " || return
+  fi
+
+  if $dry_run; then
+    run "commands_valid curl"
+  else
+    commands_valid curl
+  fi
+  echo
+  version=$(read_input "请输入 nvm 版本(默认最新版 master/v0.40.1): " "master")
+  echo
+  run "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/$version/install.sh | bash"
 }
 
 # ======================== 分割线 ========================
