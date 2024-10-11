@@ -228,7 +228,7 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
-function get_ip() { curl -s ip.llll.host }
+function get_ip() { curl -s https://ip.llll.host }
 
 export PATH=\\\$HOME/bin:/usr/local/bin:\\\$PATH
 EOF"
@@ -255,9 +255,10 @@ install_nvm() {
   echo
   run "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/$version/install.sh | bash"
 
-  echo
+  echo "--------------------------------------------"
   info "安装完成，请执行 $(cyan "source ~/.zshrc") 使配置生效"
-  info "安装完成后，可以执行 $(cyan "nvm install lts") 安装最新的 LTS 版本"
+  info "安装完成后，可以执行 $(cyan "nvm install --lts") 安装最新的 LTS 版本"
+  info "安装完成后，可以执行 $(cyan "nvm ls-remote") 查看所有可安装的版本"
   echo
 }
 
