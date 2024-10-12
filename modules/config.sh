@@ -185,3 +185,34 @@ EOF"
     fi
   fi
 }
+
+add_docker_mirror() {
+  log "添加 docker 镜像加速"
+
+  if $dry_run; then
+    run "commands_valid docker jq"
+  else
+    commands_valid docker jq
+  fi
+
+  if read_confirm "是否添加 docker 镜像加速？(y/n): "; then
+    mirror_url=$(read_input "请输入镜像地址，国内服务器无法访问 https://registry-1.docker.io: ")
+    if [ -z "$mirror_url" ]; then
+      red "镜像地址不能为空"
+    else
+      # 判断是否存在 /etc/docker/daemon.json 文件，如果不存在则创建
+      if [ ! -f /etc/docker/daemon.json ]; then
+        run "mkdir -p /etc/docker"
+        run "touch /etc/docker/daemon.json"
+      fi
+      # 使用 jq 进行修复意外空格或者空行情况
+      if ! jq -e '.["registry-mirrors"]' /etc/docker/daemon.json >/dev/null 2>&1; then
+        run "jq '. + {\"registry-mirrors\": [\"$mirror_url\"]}' /etc/docker/daemon.json > /tmp/daemon.json && mv /tmp/daemon.json /etc/docker/daemon.json"
+      else
+        run "jq '.\"registry-mirrors\" += [\"$mirror_url\"]' /etc/docker/daemon.json > /tmp/daemon.json && mv /tmp/daemon.json /etc/docker/daemon.json"
+      fi
+
+      run "systemctl restart docker"
+    fi
+  fi
+}
