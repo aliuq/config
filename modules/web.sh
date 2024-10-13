@@ -35,9 +35,13 @@ install_nvm() {
   echo
   run "curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/$version/install.sh | bash"
 
-  echo "--------------------------------------------"
-  info "安装完成，请执行 $(cyan "source ~/.zshrc") 使配置生效"
-  info "安装完成后，可以执行 $(cyan "nvm install --lts") 安装最新的 LTS 版本"
-  info "安装完成后，可以执行 $(cyan "nvm ls-remote") 查看所有可安装的版本"
   echo
+  green "安装完成，请执行 $(cyan "source ~/.zshrc") 使配置生效"
+  echo
+  info " - 安装最新的 LTS 版本: $(cyan "nvm install --lts")"
+  info " - 查看所有可安装的版本: $(cyan "nvm ls-remote")"
+  echo
+  info " - 如果遇到错误\n"
+  info "   1. $(red "mkdir: cannot create directory '~/.nvm/alias': Permission denied")\n"
+  info "      请尝试为 ~/.nvm 目录添加写权限 $(cyan "sudo chmod 777 -R ~/.nvm")"
 }
