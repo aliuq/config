@@ -79,7 +79,7 @@ install_oh_my_zsh() {
     # zsh-syntax-highlighting
     syntaxHighlightingDir="$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
     if [ ! -d "$syntaxHighlightingDir" ]; then
-      run "git clone $HUB_URL/zsh-users/zsh-syntax-highlighting.git $syntaxHighlightingDir"
+      run "git clone $HUB_URL/zsh-users/zsh-syntax-highlighting $syntaxHighlightingDir"
     else
       cyan "zsh-syntax-highlighting is already installed in $syntaxHighlightingDir"
     fi
