@@ -45,22 +45,16 @@ remaining_args=""
 
 for arg in "$@"; do
   case "$arg" in
-  --verbose)
+  --verbose | -v)
     verbose=true
     ;;
-  -v)
-    verbose=true
-    ;;
-  --force)
-    force=true
-    ;;
-  -y)
+  --force | -[yY])
     force=true
     ;;
   --dry-run)
     dry_run=true
     ;;
-  --help)
+  --help | -[hH])
     help=true
     ;;
   *)
