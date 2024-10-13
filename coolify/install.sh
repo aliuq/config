@@ -228,6 +228,7 @@ if [ -x "$(command -v snap)" ]; then
 fi
 
 if grep -iq "Microsoft" /proc/version; then
+    echo
     echo " - This is WSL"
     echo -e "3. Check Docker Installation. "
     if ! [ -x "$(command -v docker)" ]; then

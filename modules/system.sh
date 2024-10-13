@@ -57,3 +57,33 @@ change_ssh_port() {
     read_confirm "是否立即重启服务器？(y/n): " && run "sudo reboot"
   fi
 }
+
+generate_ssh_key() {
+  log "生成 SSH 密钥："
+
+  if read_confirm "是否生成 SSH 密钥？(y/n): "; then
+    save_dir="/tmp/ssh/$(date "+%Y-%m-%d-%H-%M-%S")"
+    name=$(read_input "请输入密钥名称(默认 key): " "key")
+    type=$(read_input "请输入密钥类型(1. rsa, 2. ed25519, 默认 2): " "2")
+    if [ "$type" = "1" ]; then type="rsa"; else type="ed25519"; fi
+    key="$save_dir/$name"
+
+    run "mkdir -p $save_dir"
+    run "ssh-keygen -t "$type" -b 4096 -C "aliuq@bilishare.com" -f \"$key\" -N \"\" -q"
+
+    green "\n✅ SSH 密钥生成成功\n"
+    info " - 私钥保存在 $(cyan $key)"
+    info " - 公钥保存在 $(cyan $key.pub)"
+    echo
+    info "使用: \n"
+    info "  1. 将公钥添加到远程服务器"
+    info "     先通过服务器控制台或者密码连接到远程服务器, 然后执行以下命令\n"
+    info "     > $(cyan "echo \"$(cat $key.pub)\" >> ~/.ssh/authorized_keys")"
+    echo
+    info "  2. 将私钥保存到本地, 通常是 $(cyan "~/.ssh") 下\n"
+    info "     > $(cyan "cp $key ~/.ssh/")"
+    info "     > $(cyan "ssh -i $key user@host")"
+    echo
+    yellow_bright "  * 注意: 请不要泄露私钥，否则可能导致账号被盗\n"
+  fi
+}

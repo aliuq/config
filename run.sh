@@ -5,6 +5,7 @@
 # - 目前仅支持 Ubuntu apt 安装
 #
 # sh <(curl -sL https://raw.githubusercontent.com/aliuq/config/refs/heads/master/run.sh)
+# sh <(curl -sL https://s.xod.cc/run)
 #
 set -e
 
