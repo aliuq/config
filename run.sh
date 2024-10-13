@@ -6,43 +6,111 @@
 #
 # sh <(curl -sL https://raw.githubusercontent.com/aliuq/config/refs/heads/master/run.sh)
 # sh <(curl -sL https://s.xod.cc/run)
+# MIRROR=true sh <(curl -sL https://s.xod.cc/run-mirror)
 #
 set -e
 
+# 从环境变量来判断是否通过镜像获取文件，避免请求过慢的问题
+global_mirror=${MIRROR:-false}
+
+case $global_mirror in
+true)
+  global_mirror="https://raw.llll.host"
+  ;;
+false)
+  global_mirror="https://raw.githubusercontent.com"
+  ;;
+esac
+
 . /dev/stdin <<EOF
-$(curl -sSL https://raw.githubusercontent.com/aliuq/config/refs/heads/master/helper.sh)
-$(curl -sSL https://raw.githubusercontent.com/aliuq/config/refs/heads/master/modules/system.sh)
-$(curl -sSL https://raw.githubusercontent.com/aliuq/config/refs/heads/master/modules/config.sh)
-$(curl -sSL https://raw.githubusercontent.com/aliuq/config/refs/heads/master/modules/web.sh)
+$(curl -sSL $global_mirror/aliuq/config/refs/heads/master/helper.sh)
+$(curl -sSL $global_mirror/aliuq/config/refs/heads/master/modules/system.sh)
+$(curl -sSL $global_mirror/aliuq/config/refs/heads/master/modules/config.sh)
+$(curl -sSL $global_mirror/aliuq/config/refs/heads/master/modules/web.sh)
 EOF
 
-# 测试
-# . /dev/stdin <<EOF
-# $(curl -sSL https://s.xod.cc/shell-helper-mirror)
-# EOF
+preset=""
+while [ $# -gt 0 ]; do
+  case "$1" in
+  --preset)
+    preset="$2"
+    shift
+    ;;
+  --*)
+    echo "Illegal option $1"
+    ;;
+  esac
+  shift $(($# > 0 ? 1 : 0))
+done
 
-# . /home/aliuq/apps/config/modules/system.sh
-# . /home/aliuq/apps/config/modules/config.sh
-# . /home/aliuq/apps/config/modules/web.sh
+if $help; then
+  yellow "\n暂未实现 help 功能"
+  exit 0
+fi
 
-# ======================== 分割线 ========================
-echo_commands() {
-  clear
-  printf "$(gray 脚本名称)    : $(white "个人开发环境管理脚本")\n"
-  printf "$(gray 当前版本)    : 1.0.0\n"
-  printf "$(gray 作者)        : AliuQ <https://github.com/aliuq>\n"
-  printf "$(gray 脚本描述)    : 安装通用的环境和依赖，确保各机器之间保持体验一致\n"
-  printf "$(gray 运行环境)    : $(red WSL2 Ubuntu)\n"
-  printf "$(gray "所用 Shell")  : sh\n"
+echo_info() {
+  OS=$(uname -s)
+  KERNEL_VERSION=$(uname -r)
+  USERNAME=$(whoami)
+
+  # 检查是否在 WSL 环境中
+  if grep -qi microsoft /proc/version; then
+    IS_WSL="Yes"
+  else
+    IS_WSL="No"
+  fi
+
+  # 获取完整的系统信息
+  if [ -f /etc/os-release ]; then
+    . /etc/os-release
+    OS_NAME="$NAME"
+    OS_VERSION="$VERSION"
+  elif [ -f /etc/lsb-release ]; then
+    . /etc/lsb-release
+    OS_NAME="$DISTRIB_ID"
+    OS_VERSION="$DISTRIB_RELEASE"
+  else
+    OS_NAME="Unknown"
+    OS_VERSION="Unknown"
+  fi
+
+  UPTIME_RAW=$(uptime -p)
+  UPTIME_CN=$(echo "$UPTIME_RAW" | sed \
+    -e 's/up //g' \
+    -e 's/ days/天/g' \
+    -e 's/ day/天/g' \
+    -e 's/ hours/小时/g' \
+    -e 's/ hour/小时/g' \
+    -e 's/ minutes/分钟/g' \
+    -e 's/ minute/分钟/g' \
+    -e 's/,//g' \
+    -e 's/ and / /g')
+
   echo
+  clear
+  printf "脚本名称    : $(white "个人开发环境管理脚本")\n"
+  printf "脚本地址    : https://github.com/aliuq/config/blob/master/run.sh\n"
+  printf "描述        : 记录一些本人经常使用的脚本操作\n"
+  printf "Shell       : %s\n" "$SHELL"
+  printf "Hostname    : %s\n" "$(hostname)"
+  printf "Username    : %s\n" "$USERNAME"
+  printf "IP          : %s\n" "$(hostname -I)"
+  printf "公网 IP     : %s\n" "$(green "$(curl -sL https://ip.llll.host)")"
+  printf "系统运行时间: %s\n" "$UPTIME_CN"
 
-  # 脚本信息
-  SCRIPT_NAME="WSL Ubuntu 环境初始化"
-  VERSION="1.0.0"
-  AUTHOR="AliuQ"
-  DESCRIPTION="安装通用的环境和依赖，确保各机器之间保持体验一致"
-  REQUIRED_SHELL="sh"
+  if $verbose; then
+    echo "_________________________________________\n"
+    printf "系统        : %s %s\n" "$OS_NAME" "$OS_VERSION"
+    printf "内核        : %s\n" "$KERNEL_VERSION"
+    printf "是否是 WSL  : %s\n" "$IS_WSL"
+    printf "系统架构    : %s\n" "$(uname -m)"
+    printf "Home        : %s\n" "$HOME"
+    printf "当前目录    : %s\n" "$(pwd)"
+    echo
+  fi
+}
 
+echo_commands() {
   printf "\n------------------- $(magenta "系统") -------------------\n"
   printf "$(green "1.") 更新软件包    $(green "2.") 修改主机名    $(green "q.") 退出\n"
   printf "$(green "3.") 修改 ssh 端口\n"
@@ -103,4 +171,5 @@ echo_commands() {
   echo
 }
 
+echo_info
 echo_commands
