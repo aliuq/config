@@ -7,6 +7,7 @@
 # sh <(curl -sL https://raw.githubusercontent.com/aliuq/config/refs/heads/master/run.sh)
 # sh <(curl -sL https://s.xod.cc/run)
 # MIRROR=true sh <(curl -sL https://s.xod.cc/run-mirror)
+# MIRROR=true sh <(curl -sL https://raw.llll.host/aliuq/config/refs/heads/master/run.sh)
 #
 set -e
 
@@ -118,6 +119,7 @@ echo_commands() {
   printf "\n\n------------------- $(magenta "配置") -------------------\n"
   printf "$(green "100.") 安装 zsh            $(green "101.") 安装 oh-my-zsh            $(green "102.") 覆盖 ~/.zshrc\n"
   printf "$(green "103.") 安装 starship       $(green "104.") 添加 waketime             $(green "105.") 添加 docker 镜像\n"
+  printf "$(green "106.") 生成 ssh 密钥\n"
 
   printf "\n\n------------------- $(magenta 前端) -------------------\n"
   printf "$(green "200.") 安装 nvm    \n"
@@ -155,6 +157,9 @@ echo_commands() {
     ;;
   105)
     add_docker_mirror
+    ;;
+  106)
+    generate_ssh_key
     ;;
   200)
     install_nvm

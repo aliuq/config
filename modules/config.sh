@@ -136,6 +136,37 @@ install_starship_add_config() {
   fi
 }
 
+install_starship_set_cloud() {
+  log "设置云服务商环境变量"
+  if read_confirm "是否设置云服务商环境变量？(y/n): " false; then
+    cloud_server_str="阿里云|腾讯云"
+    read_from_options_show $cloud_server_str
+    cloud_server=$(read_from_options "请选择云服务厂商?" "" $cloud_server_str)
+    echo
+    if [ -n "$cloud_server" ]; then
+      if echo "$SHELL" | grep -qE "/bash$"; then
+        run "echo 'export CLOUD_SERVER=$cloud_server' >>~/.bashrc"
+      fi
+      if echo "$SHELL" | grep -qE "/zsh$"; then
+        run "echo 'export CLOUD_SERVER=$cloud_server' >>~/.zshrc"
+      fi
+    fi
+
+    cloud_server_region_str="上海|北京|广州|深圳|杭州|香港|新加坡"
+    read_from_options_show $cloud_server_region_str
+    cloud_server_region=$(read_from_options "请选择所在地域?" "" $cloud_server_region_str)
+    echo
+    if [ -n "$cloud_server_region" ]; then
+      if echo "$SHELL" | grep -qE "/bash$"; then
+        run "echo 'export CLOUD_SERVER_REGION=$cloud_server_region' >>~/.bashrc"
+      fi
+      if echo "$SHELL" | grep -qE "/zsh$"; then
+        run "echo 'export CLOUD_SERVER_REGION=$cloud_server_region' >>~/.zshrc"
+      fi
+    fi
+  fi
+}
+
 install_starship() {
   log "安装 starship"
 
@@ -164,6 +195,8 @@ install_starship() {
       install_starship_add_config
       info "\n\n请执行 $(cyan "source ~/.zshrc") 使配置生效"
     fi
+
+    install_starship_set_cloud
   fi
 }
 

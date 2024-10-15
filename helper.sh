@@ -256,6 +256,43 @@ read_confirm_and_input() {
   echo $confrim
 }
 
+# $1: 选项列表
+read_from_options_show() {
+  if [ -n "$1" ]; then
+    echo
+    IFS="|"
+    index=1
+    printf "$(cyan "可选项:") \n"
+    echo "-------------------"
+    for item in $1; do
+      echo "$(green "$index.") $(echo "$item" | sed 's/:/ - /')"
+      index=$(($index + 1))
+    done
+    unset IFS
+    echo
+  fi
+}
+
+# $1: 提示文案
+# $2: 默认值
+# $3: 选项列表
+read_from_options() {
+  option=$(read_input "$1(默认 $2): " "$2")
+
+  IFS="|"
+  index=1
+  for item in $3; do
+    if [ "$option" = "$index" ]; then
+      IFS=":"
+      val=$(echo "$item" | cut -d':' -f1)
+      echo "$val"
+      break
+    fi
+    index=$(($index + 1))
+  done
+  unset IFS
+}
+
 is_ubuntu() {
   [ -f /etc/lsb-release ] && grep -q "DISTRIB_ID=Ubuntu" /etc/lsb-release
 }
